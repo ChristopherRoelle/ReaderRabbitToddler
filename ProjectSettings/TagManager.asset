@@ -3,16 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Interactable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Effects
   - Water
   - UI
-  - 
-  - 
+  - Map
+  - MapUI
   - 
   - 
   - 
@@ -40,4 +41,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 1505086381
+    locked: 0
+  - name: MapUI
+    uniqueID: 4120513225
+    locked: 0
+  - name: Cursor
+    uniqueID: 1988973485
     locked: 0
