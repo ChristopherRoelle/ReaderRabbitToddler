@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-     
-    Vector2 mousePosition = Vector2.zero;
 
     [SerializeField]
     float waitStarDelayInSeconds = 0.5f;
@@ -16,13 +15,17 @@ public class Player : MonoBehaviour
     Camera mainCamera;
 
     [SerializeField]
-    GameObject cursorObject;
+    GameObject cursorObject;    
+    
+    IInteractableObject collisionObjectInterface;
+    Vector2 mousePosition = Vector2.zero;
 
     bool mouseCursorFound = false;
     Collider2D cursorColider;
     List<SpriteRenderer> waitStars;
 
     private Coroutine starCoroutine;
+    private bool allowWaitStars = true;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +48,51 @@ public class Player : MonoBehaviour
     void Update()
     {
         PollMousePosition();
+
+        //Check for mouse click
+        if (Input.GetMouseButtonDown(0) && collisionObjectInterface != null)
+        {
+            ClickedInteractable();
+        }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collisionObjectInterface = collision.GetComponent<IInteractableObject>();
+
+        if (collisionObjectInterface != null)
+        {
+            Debug.Log("Has interface!");
+
+            if (starCoroutine == null && collisionObjectInterface.UseWaitStars)
+            {
+                starCoroutine = StartCoroutine(EnableStarsGradually());
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (starCoroutine != null)
+        {
+            //Reset the coroutine
+            StopCoroutine(starCoroutine);
+            starCoroutine = null;
+        }
+
+        //Turn off any stars that were active
+        TurnOffAllWaitStars();
+
+        //re-enable waitStars if they were off
+        allowWaitStars = true;
+
+        //Clear last triggered object
+        collisionObjectInterface = null;
+    }
+
+    /// <summary>
+    /// Configures the mouse.
+    /// </summary>
     void InitializeMouse()
     {
         //Disable the cursor object if it doesnt exist
@@ -64,7 +110,7 @@ public class Player : MonoBehaviour
 
                 //Hide the cursor
                 Cursor.visible = false;
-                
+
                 mouseCursorFound = true;
             }
             catch
@@ -75,32 +121,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log($"{collision.gameObject.tag}");
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(starCoroutine == null)
-        {
-            starCoroutine = StartCoroutine(EnableStarsGradually());
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (starCoroutine != null)
-        {
-            //Reset the coroutine
-            StopCoroutine(starCoroutine);
-            starCoroutine = null;
-        }
-
-        //Turn off any stars that were active
-        DisableAllWaitStars();
-    }
-
+    /// <summary>
+    /// Determines the mouse position in world-space and sets the cursor object to this position.
+    /// </summary>
     void PollMousePosition()
     {
         mousePosition = mainCamera.ScreenToViewportPoint(Input.mousePosition);
@@ -122,6 +145,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles clicking an interactable.
+    /// </summary>
+    private void ClickedInteractable()
+    {
+        if (collisionObjectInterface.IsClickable)
+        {
+            TurnOffAllWaitStars();
+            allowWaitStars = false;
+            collisionObjectInterface.DoAction();
+        }
+    }
+
+    /// <summary>
+    /// Gets all child waitStars on the cursor object.
+    /// </summary>
     private void GetWaitStars()
     {
         waitStars = new List<SpriteRenderer>();
@@ -133,29 +172,52 @@ public class Player : MonoBehaviour
         }
 
         //Set them to inactive if there are stars
-        DisableAllWaitStars();
+        TurnOffAllWaitStars();
     }
 
+    /// <summary>
+    /// Coroutine that turns on each waitStar with delay between the stars
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator EnableStarsGradually()
     {
-        if (waitStars.Count > 0)
+        int starsEnabled = 0;
+
+        //Only perform if more than 1 wait star is in the list
+        if (waitStars.Count > 0 && allowWaitStars)
         {
             foreach (var waitStar in waitStars)
             {
-                //enable current star
-                waitStar.enabled = true;
+                if (allowWaitStars)
+                {
+                    //enable current star
+                    waitStar.enabled = true;
+                    starsEnabled++;
 
-                //Wait 'x' seconds before next
-                yield return new WaitForSeconds(waitStarDelayInSeconds);
+                    //Wait 'x' seconds before next
+                    yield return new WaitForSeconds(waitStarDelayInSeconds);
+                }
+                else
+                {
+                    //Stop the coroutine, stars aren't allowed.
+                    StopCoroutine(EnableStarsGradually());
+                }
             }
         }
 
-        //If all stars have loaded, lets load the new scene from the trigger
-        LoadLevel("");
+        //If all stars have loaded, lets load the new scene from the trigger, needs to check that we didnt click.
+        if (starsEnabled == waitStars.Count && allowWaitStars)
+        {
+            collisionObjectInterface.DoAction();
+        }
     }
 
-    private void DisableAllWaitStars()
+    /// <summary>
+    /// Turns off all active waitStars on the cursor
+    /// </summary>
+    private void TurnOffAllWaitStars()
     {
+
         if (waitStars.Count > 0)
         {
             foreach (var waitStar in waitStars)
@@ -169,7 +231,7 @@ public class Player : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(level))
         {
-            DisableAllWaitStars();
+            TurnOffAllWaitStars();
             SceneManager.LoadScene(level);
         }
         else
