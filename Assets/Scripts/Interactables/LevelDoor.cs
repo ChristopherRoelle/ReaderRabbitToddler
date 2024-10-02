@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class POP : MonoBehaviour, IInteractableObject
+public class LevelDoor : MonoBehaviour, IInteractableObject
 {
-    [SerializeField] private bool useWaitStars = false;
+    [SerializeField] private bool useWaitStars = true;
     [SerializeField] private bool isClickable = true;
+    [SerializeField] private string levelToLoad;
 
     [SerializeField] private GameObject playerCursor;
-    [SerializeField] private MenuController menuObject;
 
     public bool UseWaitStars { get => useWaitStars; set => useWaitStars = value; }
     public bool IsClickable { get => isClickable; set => isClickable = value; }
@@ -20,9 +20,6 @@ public class POP : MonoBehaviour, IInteractableObject
 
     public void DoAction()
     {
-        if (menuObject != null)
-        {
-            menuObject.OpenMenu();
-        }
+        Debug.Log($"Level Door: {levelToLoad}");
     }
 }

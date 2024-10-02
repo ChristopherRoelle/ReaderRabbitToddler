@@ -3,24 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class POPEyes : MonoBehaviour
 {
-    [SerializeField] private float minTimeForBlink = 5.0f;
-    [SerializeField] private float maxTimeForBlink = 10.0f;
-    [SerializeField] private float blinkDuration = 0.1f;
+    [SerializeField] private float minTimeForBlink = 3.0f;
+    [SerializeField] private float maxTimeForBlink = 5.0f;
+    [SerializeField] private float blinkDuration = 0.2f;
     private float timer = 0.0f;
     private float timeToNextBlink = 0.0f;
-    SpriteRenderer spriteRenderer;
+    Image image;
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        image = GetComponent<Image>();
+        if (image == null) { Debug.LogError("POPEyes::Missing <IMAGE> Component"); }
 
-        if(spriteRenderer != null && spriteRenderer.enabled)
+        if (image != null && image.enabled)
         {
             //Turn off the eyelids if they are already on.
-            spriteRenderer.enabled = false;
+            image.enabled = false;
         }
 
         SetNextBlinkTime();
@@ -29,7 +31,7 @@ public class POPEyes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (spriteRenderer != null)
+        if (image != null)
         {
             timer += Time.deltaTime;
 
@@ -57,11 +59,11 @@ public class POPEyes : MonoBehaviour
     IEnumerator Blink()
     {
         //Close eyes
-        spriteRenderer.enabled = true;
+        image.enabled = true;
 
         yield return new WaitForSeconds(blinkDuration);
 
         //Open eyes
-        spriteRenderer.enabled = false;
+        image.enabled = false;
     }
 }

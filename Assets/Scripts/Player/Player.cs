@@ -8,21 +8,26 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    [SerializeField]
-    float waitStarDelayInSeconds = 0.5f;
+    [SerializeField] private float waitStarInitialDelayInSeconds = 0.75f;
+    [SerializeField] private float waitStarDelayInSeconds = 0.5f;
+    [SerializeField] private AudioSource waitStarAudioSource;
+    [SerializeField] private AudioClip waitStarAudioClip;
+    [SerializeField] private float waitStarPitchModifier = 0.02f;
+
 
     [SerializeField]
     Camera mainCamera;
 
     [SerializeField]
-    GameObject cursorObject;    
+    GameObject cursorObject;
+    ParticleSystem cursorEffects;
     
     IInteractableObject collisionObjectInterface;
     Vector2 mousePosition = Vector2.zero;
 
-    bool mouseCursorFound = false;
-    Collider2D cursorColider;
-    List<SpriteRenderer> waitStars;
+    private bool mouseCursorFound = false;
+    private Collider2D cursorColider;
+    private List<SpriteRenderer> waitStars;
 
     private Coroutine starCoroutine;
     private bool allowWaitStars = true;
@@ -58,15 +63,19 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collisionObjectInterface = collision.GetComponent<IInteractableObject>();
-
-        if (collisionObjectInterface != null)
+        //Disable trigger read if menu is opened
+        if (!RRSystem.Instance.IsMenuOpen())
         {
-            Debug.Log("Has interface!");
+            collisionObjectInterface = collision.GetComponent<IInteractableObject>();
 
-            if (starCoroutine == null && collisionObjectInterface.UseWaitStars)
+            if (collisionObjectInterface != null)
             {
-                starCoroutine = StartCoroutine(EnableStarsGradually());
+                Debug.Log("Has interface!");
+
+                if (starCoroutine == null && collisionObjectInterface.UseWaitStars)
+                {
+                    starCoroutine = StartCoroutine(EnableStarsGradually());
+                }
             }
         }
     }
@@ -98,7 +107,7 @@ public class Player : MonoBehaviour
         //Disable the cursor object if it doesnt exist
         if (cursorObject == null)
         {
-            Debug.Log("Cursor - Object not set!");
+            Debug.LogError("Cursor - Object not set!");
             Cursor.visible = true;
         }
         else
@@ -107,6 +116,7 @@ public class Player : MonoBehaviour
             try
             {
                 cursorColider = cursorObject.GetComponent<Collider2D>();
+                cursorEffects = this.GetComponent<ParticleSystem>();
 
                 //Hide the cursor
                 Cursor.visible = false;
@@ -115,7 +125,7 @@ public class Player : MonoBehaviour
             }
             catch
             {
-                Debug.Log("Cursor - No collider found!");
+                Debug.LogError("Cursor - No collider found!");
                 Cursor.visible = true;
             }
         }
@@ -183,6 +193,15 @@ public class Player : MonoBehaviour
     {
         int starsEnabled = 0;
 
+        //Initial delay to prevent accidental waitStar accumulation when just moving the mouse around the scene
+        yield return new WaitForSeconds(waitStarInitialDelayInSeconds);
+
+        //Reset pitch before continuing
+        if (waitStarAudioSource != null)
+        {
+            waitStarAudioSource.pitch = 1.0f;
+        }
+
         //Only perform if more than 1 wait star is in the list
         if (waitStars.Count > 0 && allowWaitStars)
         {
@@ -192,6 +211,14 @@ public class Player : MonoBehaviour
                 {
                     //enable current star
                     waitStar.enabled = true;
+
+                    //Adjust the pitch and play the SFx if clip and source are configured
+                    if(waitStarAudioClip != null && waitStarAudioSource != null)
+                    {
+                        waitStarAudioSource.pitch += waitStarPitchModifier * starsEnabled;
+                        waitStarAudioSource.PlayOneShot(waitStarAudioClip);
+                    }
+
                     starsEnabled++;
 
                     //Wait 'x' seconds before next
@@ -237,6 +264,40 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("Level - No Level to load!");
+        }
+    }
+
+    /// <summary>
+    /// Hides the cursor object and re-enables the cursor
+    /// </summary>
+    public void HideSpriteCursor()
+    {
+        if (mouseCursorFound)
+        { 
+            cursorObject.GetComponent<SpriteRenderer>().enabled = false;
+            if(cursorEffects != null)
+            {
+                cursorEffects.Stop();
+            }
+
+            Cursor.visible = true;
+        }
+    }
+
+    /// <summary>
+    /// Shows the cursor object and disables the cursor
+    /// </summary>
+    public void ShowSpriteCursor()
+    {
+        if (mouseCursorFound)
+        {
+            cursorObject.GetComponent<SpriteRenderer>().enabled = true;
+            if (cursorEffects != null)
+            {
+                cursorEffects.Play();
+            }
+
+            Cursor.visible = false;
         }
     }
 }
