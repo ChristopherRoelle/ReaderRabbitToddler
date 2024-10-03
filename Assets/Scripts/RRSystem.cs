@@ -33,4 +33,9 @@ public class RRSystem : MonoBehaviour
     {
         return menuOpened;
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

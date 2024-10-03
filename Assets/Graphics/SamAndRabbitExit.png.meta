@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5d0ef5c3062593643b4ebd2017da1445
+guid: 92ef4f229e4bbbf44890f2500e66ccf0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -21,7 +21,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -110,316 +110,232 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MattyMouseIco
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 768
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f84582c46349a5e44b45ea023d3b2056
-      internalID: 1744646354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Quit
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 640
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d067e99d137f4304a81e562cc610182d
-      internalID: 899419750
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StarFlowerIco
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 256
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f38dd68509bfa74fb96d9113c8d635e
-      internalID: -1471886856
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: SkillBoard
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 512
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 25539c8814a1c9f47bf2ae970499c4e4
-      internalID: -2094847541
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: PulseMouse
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 384
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 56026e8ee7cdf2542a1a4623da04a477
-      internalID: -546837325
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pencil
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 128
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ce6a466ea3004d48a532e64f2b15d42
-      internalID: 1859615493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: POPBtnBkg_norm
+      name: Exit_Bkg
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 1152
         width: 128
         height: 128
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 14, y: 14, z: 14, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 2, y: 2, z: 2, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e2a3b81429c258429ce1cd256a9aeaf
-      internalID: -1392316513
+      spriteID: 9726e1282fa36984a94654ac9edce2a3
+      internalID: -683428396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: POPBtnBkg
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 10, y: 8, z: 10, w: 8}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10f922a705b16044d99a7107030c1aa2
-      internalID: -801970204
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: POPMenu_48
+      name: RabbitBody
       rect:
         serializedVersion: 2
         x: 384
-        y: 0
-        width: 128
-        height: 128
+        y: 1024
+        width: 198
+        height: 164
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf69cac2c5f0e0f4b97228903ef44bf2
-      internalID: 886651535
+      spriteID: 65031d8b5c9701f40b93c8d2cb21a53e
+      internalID: -1041059553
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: POPMenu_49
+      name: SamBody
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 128
-        height: 128
+        x: 604
+        y: 1014
+        width: 288
+        height: 262
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2bcbb30973592294da480a5d2e8f827c
-      internalID: 1353492294
+      spriteID: 4189a0b8898381645a3d27ba1dd698ab
+      internalID: -2088377884
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: POPEyesClosed
+      name: No_normal
       rect:
         serializedVersion: 2
-        x: 640
-        y: 0
-        width: 128
-        height: 128
+        x: 4
+        y: 1066
+        width: 70
+        height: 74
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 470d7e38d4b52524eb44502b45db39e7
-      internalID: -185956741
+      spriteID: ffc8e9bbc26aa1f4783f14a979686873
+      internalID: -2101348013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Printer
-      rect:
-        serializedVersion: 2
-        x: 896
-        y: 0
-        width: 128
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7853b167bb328bc4593898ee969a91a2
-      internalID: -601876729
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: POPMenu
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 128
-        width: 896
-        height: 768
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ff2b1856d7d36c4f8988d325e7d0c6d
-      internalID: -1951050235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: POPBtnBkg_down
+      name: No_Highlight
       rect:
         serializedVersion: 2
         x: 128
-        y: 0
-        width: 128
-        height: 128
+        y: 1066
+        width: 70
+        height: 74
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 12, y: 14, z: 12, w: 14}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c182bc05837497c4c90b4cb3a1a4e0fd
-      internalID: 1828153058
+      spriteID: 215f79453c5b25e44b39b3816a7a7a7d
+      internalID: 1517115787
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpeechBubble
+      name: Yes_normal
       rect:
         serializedVersion: 2
-        x: 768
-        y: 56
-        width: 128
-        height: 72
+        x: 0
+        y: 938
+        width: 122
+        height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 54, y: 10, z: 24, w: 14}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 554d05d3f1a3cc8489b189b3e97dd2f0
-      internalID: 483381128
+      spriteID: 3eb8382d3cfbf07489f9fa85f4eee3d7
+      internalID: 254552371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Yes_Highlight
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 938
+        width: 122
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d2bb41f6a2fd2c4a8ec05502ccdcd74
+      internalID: -1917302938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 94
+        height: 172
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fdcddfbe131b2c40988fc179ff87cd3
+      internalID: -1479840777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rabbit_2
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 640
+        width: 110
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e648828f34f67324b9d4d33ecb2918fe
+      internalID: -12375554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sam1
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 384
+        width: 176
+        height: 202
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ce43f5ede704f45b9226031ac6a3f5
+      internalID: -1168704960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sam2
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 384
+        width: 176
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81bead197b357fd4caa0338a65f847c3
+      internalID: 126024053
       vertices: []
       indices: 
       edges: []
@@ -435,60 +351,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MattyMouseIco: 1744646354
-      POPBtnBkg: -801970204
-      POPBtnBkg_down: 1828153058
-      POPBtnBkg_norm: -1392316513
-      POPEyesClosed: -185956741
-      POPMenu: -1951050235
-      POPMenu_1: 1773722451
-      POPMenu_10: 752201613
-      POPMenu_11: -1731699278
-      POPMenu_12: -708475185
-      POPMenu_13: 1999087709
-      POPMenu_15: -1353966515
-      POPMenu_16: 31460753
-      POPMenu_17: -507323701
-      POPMenu_18: -777069561
-      POPMenu_19: 754006465
-      POPMenu_2: 2071776703
-      POPMenu_20: -307006470
-      POPMenu_21: 1307849663
-      POPMenu_23: -1920396981
-      POPMenu_24: 677712356
-      POPMenu_25: -1127625510
-      POPMenu_26: -1436284011
-      POPMenu_27: 2097144571
-      POPMenu_28: 1270441203
-      POPMenu_29: 958926727
-      POPMenu_3: 550316916
-      POPMenu_31: 247166612
-      POPMenu_32: -879605700
-      POPMenu_33: -611992464
-      POPMenu_34: -601459252
-      POPMenu_35: -71314816
-      POPMenu_36: -1884189963
-      POPMenu_37: -1981793489
-      POPMenu_39: 146811077
-      POPMenu_4: -622892893
-      POPMenu_40: -2133950422
-      POPMenu_41: -849382337
-      POPMenu_42: 128811471
-      POPMenu_43: 253074304
-      POPMenu_44: -1903224369
-      POPMenu_48: 886651535
-      POPMenu_49: 1353492294
-      POPMenu_5: 1200512359
-      POPMenu_7: -2144921195
-      POPMenu_8: 485927561
-      POPMenu_9: 1112129310
-      Pencil: 1859615493
-      Printer: -601876729
-      PulseMouse: -546837325
-      Quit: 899419750
-      SkillBoard: 1718928750
-      SpeechBubble: 483381128
-      StarFlowerIco: -1471886856
+      Exit_Bkg: -683428396
+      No_Highlight: 1517115787
+      No_normal: -2101348013
+      RabbitBody: -1041059553
+      Rabbit_1: -1479840777
+      Rabbit_2: -12375554
+      Sam1: -1168704960
+      Sam2: 126024053
+      SamAndRabbitExit_11: -2074743859
+      SamAndRabbitExit_12: -1200776597
+      SamAndRabbitExit_3: -1453292471
+      SamAndRabbitExit_4: 2085059651
+      SamAndRabbitExit_6: 1847141316
+      SamAndRabbitExit_8: 299294874
+      SamAndRabbitExit_9: 1497981559
+      SamBody: -2088377884
+      Yes_Highlight: -1917302938
+      Yes_normal: 254552371
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

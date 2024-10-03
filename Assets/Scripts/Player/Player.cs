@@ -21,8 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject cursorObject;
     ParticleSystem cursorEffects;
-    
-    IInteractableObject collisionObjectInterface;
+
+    [SerializeField] IInteractableObject collisionObjectInterface;
     Vector2 mousePosition = Vector2.zero;
 
     private bool mouseCursorFound = false;
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private List<SpriteRenderer> waitStars;
 
     private Coroutine starCoroutine;
-    private bool allowWaitStars = true;
+    [SerializeField] private bool allowWaitStars = true;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +68,13 @@ public class Player : MonoBehaviour
         {
             collisionObjectInterface = collision.GetComponent<IInteractableObject>();
 
+            if(collisionObjectInterface.GetType() == typeof(POP))
+            {
+                Debug.Log("POP!");
+                //Call ShowSpeechBubble
+                collisionObjectInterface.ConvertTo<POP>().ShowSpeechBubble();
+            }
+
             if (collisionObjectInterface != null)
             {
                 Debug.Log("Has interface!");
@@ -82,21 +89,32 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (starCoroutine != null)
+        //Disable trigger read if menu is opened
+        if (!RRSystem.Instance.IsMenuOpen())
         {
-            //Reset the coroutine
-            StopCoroutine(starCoroutine);
-            starCoroutine = null;
+            if (starCoroutine != null)
+            {
+                //Reset the coroutine
+                StopCoroutine(starCoroutine);
+                starCoroutine = null;
+            }
+
+            //Turn off any stars that were active
+            ResetWaitStars();
+
+            //re-enable waitStars if they were off
+            allowWaitStars = true;
+
+            //If this is POP, we want to hide his speech bubble.
+            if (collisionObjectInterface.GetType() == typeof(POP))
+            {
+                //Call HideSpeechBubble
+                collisionObjectInterface.ConvertTo<POP>().HideSpeechBubble();
+            }
+
+            //Clear last triggered object
+            collisionObjectInterface = null;
         }
-
-        //Turn off any stars that were active
-        TurnOffAllWaitStars();
-
-        //re-enable waitStars if they were off
-        allowWaitStars = true;
-
-        //Clear last triggered object
-        collisionObjectInterface = null;
     }
 
     /// <summary>
@@ -162,7 +180,7 @@ public class Player : MonoBehaviour
     {
         if (collisionObjectInterface.IsClickable)
         {
-            TurnOffAllWaitStars();
+            ResetWaitStars();
             allowWaitStars = false;
             collisionObjectInterface.DoAction();
         }
@@ -182,7 +200,7 @@ public class Player : MonoBehaviour
         }
 
         //Set them to inactive if there are stars
-        TurnOffAllWaitStars();
+        ResetWaitStars();
     }
 
     /// <summary>
@@ -242,7 +260,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// Turns off all active waitStars on the cursor
     /// </summary>
-    private void TurnOffAllWaitStars()
+    public void ResetWaitStars()
     {
 
         if (waitStars.Count > 0)
@@ -258,7 +276,7 @@ public class Player : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(level))
         {
-            TurnOffAllWaitStars();
+            ResetWaitStars();
             SceneManager.LoadScene(level);
         }
         else
@@ -280,6 +298,9 @@ public class Player : MonoBehaviour
                 cursorEffects.Stop();
             }
 
+            //Turn off any active waitStars
+            ResetWaitStars();
+
             Cursor.visible = true;
         }
     }
@@ -299,5 +320,9 @@ public class Player : MonoBehaviour
 
             Cursor.visible = false;
         }
+
+        //Clear last triggered object
+        collisionObjectInterface = null;
+        allowWaitStars = true;
     }
 }
