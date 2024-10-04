@@ -8,7 +8,8 @@ public class RRSystem : MonoBehaviour
     //Singleton
     public static RRSystem Instance { get; private set; }
 
-    private bool menuOpened;
+    private bool mainMenuOpened;
+    private bool exitMenuOpened;
 
     private void Awake()
     {
@@ -24,18 +25,48 @@ public class RRSystem : MonoBehaviour
         }
     }
 
-    public void SetMenuOpen(bool _menuOpen)
+    public void SetMainMenuOpen(bool _menuOpen)
     {
-        menuOpened = _menuOpen;
+        mainMenuOpened = _menuOpen;
     }
 
-    public bool IsMenuOpen()
+    public bool IsMainMenuOpen()
     {
-        return menuOpened;
+        return mainMenuOpened;
     }
 
+    public void SetExitMenuOpen(bool _exitMenuOpen)
+    {
+        exitMenuOpened = _exitMenuOpen;
+    }
+
+    public bool IsExitMenuOpen()
+    {
+        return exitMenuOpened;
+    }
+
+    /// <summary>
+    /// Checks if any Menus are open
+    /// </summary>
+    /// <returns>
+    /// True - All Menus are closed. 
+    /// False - One of the Menus are open.
+    /// </returns>
+    public bool AreAllMenusClosed()
+    {
+        return !mainMenuOpened && !exitMenuOpened;
+    }
+
+    /// <summary>
+    /// Ends the game
+    /// </summary>
     public void ExitGame()
     {
         Application.Quit();
+
+        //Stop the game if in Debug
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }

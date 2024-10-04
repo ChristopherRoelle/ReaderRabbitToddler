@@ -19,12 +19,24 @@ public class ExitMenuController : MonoBehaviour
         CloseMenu();
     }
 
+    private void Update()
+    {
+        //Allow pressing escape to close the Exit Menu
+        if (RRSystem.Instance.IsExitMenuOpen())
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                CloseMenu();
+            }
+        }
+    }
+
     public void OpenMenu()
     {
         menuOverlayGroup.blocksRaycasts = true;
         menuOverlayGroup.alpha = 1f;
         menuOpen = true;
-        RRSystem.Instance.SetMenuOpen(menuOpen);
+        RRSystem.Instance.SetExitMenuOpen(menuOpen);
 
         if (playerCursor != null)
         {
@@ -37,9 +49,9 @@ public class ExitMenuController : MonoBehaviour
         menuOverlayGroup.blocksRaycasts = false;
         menuOverlayGroup.alpha = 0f;
         menuOpen = false;
-        RRSystem.Instance.SetMenuOpen(menuOpen);
+        RRSystem.Instance.SetExitMenuOpen(menuOpen);
 
-        if (playerCursor != null)
+        if (playerCursor != null && RRSystem.Instance.AreAllMenusClosed())
         {
             playerCursor.ShowSpriteCursor();
         }

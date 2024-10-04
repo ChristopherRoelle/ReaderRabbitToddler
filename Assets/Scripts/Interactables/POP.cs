@@ -25,7 +25,8 @@ public class POP : MonoBehaviour, IInteractableObject
     }
 
     public void ShowSpeechBubble() {
-        if (speechBubbleRoutine == null)
+        //Only open if the coroutine isnt running and all menus are closed
+        if (speechBubbleRoutine == null && RRSystem.Instance.AreAllMenusClosed())
         {
             speechBubbleRoutine = StartCoroutine(WaitForSpeechBubble());
         }

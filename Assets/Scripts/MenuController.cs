@@ -26,29 +26,37 @@ public class MenuController : MonoBehaviour
         //Check for input on the Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(menuOpen)
+            //Make sure that the exit menu isnt opened.
+            if (!RRSystem.Instance.IsExitMenuOpen())
             {
-                CloseMenu();
-            }
-            else
-            {
-                OpenMenu();
+                if (menuOpen)
+                {
+                    CloseMenu();
+                }
+                else
+                {
+                    OpenMenu();
+                }
             }
         }
     }
 
     public void OpenMenu()
     {
-        overlayPanel.SetActive(true);
-        //menuOverlayGroup.interactable = true;
-        menuOverlayGroup.blocksRaycasts = true;
-        menuOverlayGroup.alpha = 1f;
-        menuOpen = true;
-        RRSystem.Instance.SetMenuOpen(menuOpen);
-
-        if (playerCursor != null)
+        //Dont allow this window to open if the exit menu is up already.
+        if (!RRSystem.Instance.IsExitMenuOpen())
         {
-            playerCursor.HideSpriteCursor();
+            overlayPanel.SetActive(true);
+            //menuOverlayGroup.interactable = true;
+            menuOverlayGroup.blocksRaycasts = true;
+            menuOverlayGroup.alpha = 1f;
+            menuOpen = true;
+            RRSystem.Instance.SetMainMenuOpen(menuOpen);
+
+            if (playerCursor != null)
+            {
+                playerCursor.HideSpriteCursor();
+            }
         }
     }
 
@@ -59,9 +67,9 @@ public class MenuController : MonoBehaviour
         menuOverlayGroup.blocksRaycasts = false;
         menuOverlayGroup.alpha = 0f;
         menuOpen = false;
-        RRSystem.Instance.SetMenuOpen(menuOpen);
+        RRSystem.Instance.SetMainMenuOpen(menuOpen);
 
-        if (playerCursor != null )
+        if (playerCursor != null && RRSystem.Instance.AreAllMenusClosed())
         {
             playerCursor.ShowSpriteCursor();
         }

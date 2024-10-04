@@ -59,12 +59,19 @@ public class Player : MonoBehaviour
         {
             ClickedInteractable();
         }
+
+        //If a menu opens and the star coroutine is running, lets stop the routine.
+        if (!RRSystem.Instance.AreAllMenusClosed() && starCoroutine != null)
+        {
+            StopCoroutine(starCoroutine);
+            starCoroutine = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Disable trigger read if menu is opened
-        if (!RRSystem.Instance.IsMenuOpen())
+        if (!RRSystem.Instance.IsMainMenuOpen())
         {
             collisionObjectInterface = collision.GetComponent<IInteractableObject>();
 
@@ -90,7 +97,7 @@ public class Player : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         //Disable trigger read if menu is opened
-        if (!RRSystem.Instance.IsMenuOpen())
+        if (RRSystem.Instance.AreAllMenusClosed())
         {
             if (starCoroutine != null)
             {
@@ -106,7 +113,7 @@ public class Player : MonoBehaviour
             allowWaitStars = true;
 
             //If this is POP, we want to hide his speech bubble.
-            if (collisionObjectInterface.GetType() == typeof(POP))
+            if (collisionObjectInterface != null && collisionObjectInterface.GetType() == typeof(POP))
             {
                 //Call HideSpeechBubble
                 collisionObjectInterface.ConvertTo<POP>().HideSpeechBubble();
