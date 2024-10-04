@@ -6,16 +6,20 @@ public class ExitMenuController : MonoBehaviour
 {
     [SerializeField] private GameObject menuPanel;
     [SerializeField] private Player playerCursor;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip dialogClip;
 
     private CanvasGroup menuOverlayGroup;
 
     [SerializeField] private bool menuOpen = false;
+    private bool menuDialogHasPlayed = false;
 
     // Start is called before the first frame update
     void Start()
     {
         playerCursor = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         menuOverlayGroup = GetComponent<CanvasGroup>();
+
         CloseMenu();
     }
 
@@ -33,6 +37,9 @@ public class ExitMenuController : MonoBehaviour
 
     public void OpenMenu()
     {
+        //Stop audio if its playing
+        StopAudioSource();
+
         menuOverlayGroup.blocksRaycasts = true;
         menuOverlayGroup.alpha = 1f;
         menuOpen = true;
@@ -42,10 +49,21 @@ public class ExitMenuController : MonoBehaviour
         {
             playerCursor.HideSpriteCursor();
         }
+
+        //Play dialog
+        if (audioSource != null && dialogClip != null && !menuDialogHasPlayed)
+        {
+            audioSource.PlayOneShot(dialogClip);
+            menuDialogHasPlayed = true;
+        }
     }
 
     public void CloseMenu()
     {
+        //Stop audio if its playing
+        StopAudioSource();
+
+        menuDialogHasPlayed = false;
         menuOverlayGroup.blocksRaycasts = false;
         menuOverlayGroup.alpha = 0f;
         menuOpen = false;
@@ -54,6 +72,14 @@ public class ExitMenuController : MonoBehaviour
         if (playerCursor != null && RRSystem.Instance.AreAllMenusClosed())
         {
             playerCursor.ShowSpriteCursor();
+        }
+    }
+
+    public void StopAudioSource()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 }
